@@ -118,6 +118,43 @@ class API(object):
         endpoint = "/v1/executions"
         return self.request(endpoint, params=params)
 
+    def getboardstate(self, **params):
+        """Board status
+        This will allow you to determine the current status of the board.
+
+        API Type
+        --------
+        HTTP Public API
+
+        Parameters
+        ----------
+        product_code: Designate "BTC_JPY", "FX_BTC_JPY" or "ETH_BTC".
+        count, before, after: See Pagination.
+
+        Response
+        --------
+        state: one of the following levels will be displayed
+            NORMAL: The exchange is operating.
+            BUSY: The exchange is experiencing heavy traffic.
+            VERY BUSY: The exchange is experiencing extremely heavy traffic. There is a possibility that orders will fail or be processed after a delay.
+            STOP: The exchange has been stopped. Orders will not be accepted.
+        health: 取引所の稼動状態です。以下のいずれかの値をとります。
+            NORMAL: 取引所は稼動しています。
+            BUSY: 取引所に負荷がかかっている状態です。
+            VERY BUSY: 取引所の負荷が大きい状態です。
+            SUPER BUSY: 負荷が非常に大きい状態です。発注は失敗するか、遅れて処理される可能性があります。
+            NO ORDER: 発注が受付できない状態です。
+            STOP: 取引所は停止しています。発注は受付されません。
+        data: 板の状態について、付加情報を提供します。
+            special_quotation: Lightning Futures の SQ（清算値）
+
+        Docs
+        ----
+        https://lightning.bitflyer.jp/docs?lang=ja#板の状態
+        """
+        endpoint = "/v1/getboardstate"
+        return self.request(endpoint, params=params)
+
     def gethealth(self, **params):
         """Exchange status
         This will allow you to determine the current status of the exchange.
